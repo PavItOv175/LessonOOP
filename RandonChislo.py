@@ -1,8 +1,11 @@
 import random
 import sqlite3
+
 rand_num = random.randint(1, 5)
 attempts = 0
-def insert_varible_into_table(PlayerName, attempts):
+
+
+def insert_varible_into_table(playerName, attempts):
     try:
         sqlite_connection = sqlite3.connect('my_db_users.db')
         cursor = sqlite_connection.cursor()
@@ -16,7 +19,7 @@ def insert_varible_into_table(PlayerName, attempts):
                               (PlayerName, attempts)
                               VALUES (?, ?);"""
 
-        data_tuple = (PlayerName, attempts)
+        data_tuple = (playerName, attempts)
         cursor.execute(sqlite_insert_with_param, data_tuple)
         sqlite_connection.commit()
         print("Переменные Python успешно вставлены в таблицу sqlitedb_developers")
@@ -30,14 +33,15 @@ def insert_varible_into_table(PlayerName, attempts):
             sqlite_connection.close()
             print("Соединение с SQLite закрыто")
 
+
 while True:
     answer = int(input("Угадай число: "))
     if answer == rand_num:
         attempts += 1
         print("Угадал")
         print(f'Тебе понадобилось {attempts} попыток')
-        PlayerName = input('Введи своё имя: ')
-        insert_varible_into_table(PlayerName, attempts)
+        playerName = input('Введи своё имя: ')
+        insert_varible_into_table(playerName, attempts)
         break
     elif answer < rand_num:
         print("Число слишком маленькое")
@@ -46,5 +50,3 @@ while True:
     elif answer > rand_num:
         print("Число слишком большое")
         attempts += 1
-
-
